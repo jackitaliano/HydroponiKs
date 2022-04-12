@@ -19,7 +19,9 @@ class Controller1(Controller):
         nutrients = self.model.get_plant_nutrients()
         img_file = self.model.get_plant_img_file()
 
-        self.view.set_plant_info(type, description, water, nutrients, img_file)
+        # self.view.set_plant_info(type, description, water, nutrients, img_file)
+
+        
 
     def update_plant_type(self, type):
         self.model.set_plant_type(type)

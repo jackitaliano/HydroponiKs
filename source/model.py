@@ -16,7 +16,7 @@ class Model(ABC):
         pass
 
 
-class Model1(Model):
+class Model(Model):
     plants : dict
 
     def __init__(self) -> None:
@@ -60,7 +60,7 @@ class Model1(Model):
 
     def load_plant_types(self):
         with open(os.path.join("plants", "plants.json"), 'r') as file:
-            Model1.plants = json.load(file)
+            Model.plants = json.load(file)
 
     def load_save_state(self):
         with open(os.path.join("plants", "stored_state.json"), 'r') as file:

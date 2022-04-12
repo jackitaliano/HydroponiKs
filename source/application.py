@@ -1,6 +1,6 @@
 import tkinter as tk
-from view import View1
-from model import Model1
+from view import View
+from model import Model
 from controller import Controller1
 import atexit
 
@@ -13,8 +13,8 @@ class App(tk.Tk):
         screen_height = self.winfo_screenheight()
 
         #window width
-        window_width = 3 * screen_width // 4
-        window_height = 3 *screen_height // 4
+        window_width = 15 * screen_width // 24
+        window_height = 15 * screen_height // 24
 
         # find the center point
         center_x = int(screen_width/2 - window_width / 2)
@@ -27,13 +27,10 @@ class App(tk.Tk):
         self.grid_rowconfigure(0, weight=1)
         self.grid_columnconfigure(0, weight=1)
 
-        self.model = Model1()
-        self.view = View1(master=self)
+        self.model = Model()
+        self.view = View(self)
 
-
-        self.view.set_schedule(self.model.get_schedule())
-        self.view.set_plant_types(self.model.get_plant_types())
-        self.view.create_view()
+        self.view.create_view(self.model.get_schedule())
 
         self.controller = Controller1(self.model, self.view)
 
