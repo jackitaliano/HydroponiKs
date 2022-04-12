@@ -11,11 +11,11 @@ class View(ABC, tk.Frame):
         pass
 
     @abstractclassmethod
-    def set_contoller():
+    def register_observer():
         pass
 
     @abstractclassmethod
-    def event_handler():
+    def action_performed():
         pass
 
     @abstractclassmethod
@@ -23,12 +23,13 @@ class View(ABC, tk.Frame):
         pass
 
     @abstractclassmethod
-    def set_plant_info():
+    def update_plant_info():
         pass
 
     @abstractclassmethod
-    def set_schedule():
+    def update_schedule():
         pass
+
 class View(View):
     def __init__(self, master):
         super().__init__(master)
@@ -41,27 +42,28 @@ class View(View):
         self.plant_menu_var = tk.StringVar(self)
 
     def create_view(self, schedule):
+
         tabControl = ttk.Notebook(self)
 
-        self.control_tab = ControlFrame(schedule, master=tabControl, row=0, col=0, weight=1)
-        self.information_tab = ttk.Frame(tabControl)
+        self.control_tab = ControlFrame(self, tabControl, schedule, row=0, col=0, weight=1)
+        self.plant_info_tab = PlantInfoFrame(master=tabControl, row=0, col=0, weight=1)
         self.education_tab = ttk.Frame(tabControl)
 
         tabControl.add(self.control_tab, text ='Controls')
-        tabControl.add(self.information_tab, text ='Plant Info')
+        tabControl.add(self.plant_info_tab, text ='Plant Info')
         tabControl.add(self.education_tab, text ='Education')
-        tabControl.pack(expand = 1, fill ="both")
+        tabControl.pack(expand = 1, fill='both')
 
-    def set_contoller(self, controller):
-        self.controller = controller
+    def register_observer(self, observer):
+        self.controller = observer
 
     def set_plant_types(self, types):
         self.plant_types = types
         
-    def set_schedule(self, schedule):
+    def update_schedule(self, schedule):
         self.control_tab.schedule = schedule
 
-    def set_plant_info(self, type, description, water, nutrients, img_file):
+    def update_plant_info(self, type, description, water, nutrients, img_file):
         top_right_frame = self.top_frame.top_right_frame
 
         self.plant_menu_var.set(type)
@@ -70,74 +72,64 @@ class View(View):
         top_right_frame.information_frame.plant_nutrients.config(text=nutrients)
         top_right_frame.selection_frame.create_img(row=1, col=0, width=150, height=150, img_file=img_file)
 
-    def event_handler(self, event=''):
-        if event == 'left clicked':
-            water_level = int(self.water_label['text'].split()[2]) + 10
-            self.top_left_frame.water_label.config(text=f'Water level: {water_level}')
-            print(water_level)
-
-        elif event == 'right clicked':
-            print(self.plant_types)
-
-        elif event == 'plant_menu':
-            self.controller.update_plant_type(self.plant_menu_var.get())
+    def action_performed(self, event):
+        pass
 
         self.controller.update_view_to_match_model()
-
+class Event():
+    def __init__(self, source, event):
+        self.source = source
+        self.event = event
 class ControlFrame(Frame):
-    def __init__(self, schedule, master, row=0, col=0, weight=1):
+    def __init__(self, root, master, schedule, row=0, col=0, weight=1):
         super().__init__(master, row=row, col=col, border=True)
 
+        self.root = root
         self.schedule = schedule
 
-        #widgets
+        #water level label
         self.water_label = self.create_label(text="Water level: 100", row=0, col=0)
+
+        #schedule 
         self.schedule_frame = ScheduleFrame(master=self, row=1, col=0)
-        self.water_button = self.create_button(text="Water Now", row=2, col=0, event='water_now')
-        
-        self.grid_rowconfigure(0, weight=1)
-        self.grid_rowconfigure(1, weight=3)
-        self.grid_rowconfigure(2, weight=1)
+
+        #frame containing water now button
+        self.water_now_frame = Frame(self, 2, 0)
+        self.water_now_frame.grid_columnconfigure(0, weight='1')
+
+        #water button
+        self.water_button = self.water_now_frame.create_button(text="Water Now", row=0, col=0, event='water_now')
+        self.water_button.config(width='20')
+        self.water_button.grid_rowconfigure(0, weight='1')
+
+        self.grid_rowconfigure(0, weight=1) #water level
+        self.grid_rowconfigure(1, weight=3) #schedule
+        self.grid_rowconfigure(2, weight=1) #water now button
         self.grid_columnconfigure(0, weight=1)
+        self.grid(row= 0, column =0, sticky="nsew")
 
-    def actionPerformed(self, e):
-        pass
-    
-class PlantInfoFrame(Frame):
-    def __init__(self, master, num_rows=1, num_cols=1, row=0, col=0, weight=1):
-        super().__init__(master, row=row, col=col, border=True)
+    def update_schedule(self, schedule):
+        self.schedule = schedule
 
-        self.selection_frame = SelectionFrame(self, num_rows=3, row=0, col=0)
-        self.information_frame = InformationFrame(self, num_rows=3, row=1, col=0, weight = 10)
-
-class SelectionFrame(Frame):
-    def __init__(self, master, num_rows=1, num_cols=1, row=0, col=0, weight=1):
-        super().__init__(master, row=row, col=col, border=True)
-
-        self.plant_img = self.create_img(1, 0, 50, 50, "default.jpg")
-        self.root.plant_menu_var.set('select plant')
-        self.root.plant_dropdown = self.create_menu(2, 0, self.root.plant_menu_var, self.root.plant_types, 'plant_menu')
-        
-class InformationFrame(Frame):
-    def __init__(self, master, num_rows=1, num_cols=1, row=0, col=0, weight=1):
-        super().__init__(master, row=row, col=col, border=True)
-
-        #widgets
-        self.plant_description = self.create_label("plant description", 0, 0)
-        self.plant_water = self.create_label("plant water", 1, 0)
-        self.plant_nutrients = self.create_label("plant nutrients", 2, 0)   
+    def action_performed(self, e):
+        if e == 'water_now':
+            self.master.master.controller.process_water_event()
 
 class ScheduleFrame(Frame): 
-    def __init__(self, master, row=0, col=0):
-        super().__init__(master, row=row, col=col, border=False)
-        self.grid_rowconfigure(0, weight=1)
-        self.grid_rowconfigure(1, weight=12)
-        self.grid_columnconfigure(0, weight=1)
-
+    def __init__(self, master, row=0, col=0, border=False):
+        super().__init__(master, row=row, col=col, border=border)
+ 
+        #title
         self.title = ttk.Label(self, text="Schedule")
         self.title.grid(row=0)
+
+        #table of schedule
         self.table = self.update_table_from_schedule(master.schedule)
         self.schedule_frame = self.create_button_table(1, 0, self.table)
+
+        self.grid_rowconfigure(0, weight=1) #title
+        self.grid_rowconfigure(1, weight=12) #table
+        self.grid_columnconfigure(0, weight=1)
 
     def update_table_from_schedule(self, schedule):
         table = [[0] * 25 for _ in range(7)]
@@ -149,7 +141,7 @@ class ScheduleFrame(Frame):
 
         return table
 
-    def actionPerformed(self, e):
+    def action_performed(self, e):
         day, time = e.split(",")
         time = int(time)
         day_schedule = self.master.schedule[day]
@@ -161,5 +153,23 @@ class ScheduleFrame(Frame):
             
         self.master.schedule[day] = day_schedule
         self = ScheduleFrame(master=self.master, row=1, col=0)
+class PlantInfoFrame(Frame):
+    def __init__(self, master, row, col, border=False):
+        super().__init__(master, row=row, col=col, border=border)
 
-        
+        self.selection_frame = SelectionFrame(self, row=0, col=0)
+        self.information_frame = InformationFrame(self, row=0, col=1)
+class SelectionFrame(Frame):
+    def __init__(self, master, row, col, border=False):
+        super().__init__(master, row=row, col=col, border=border)
+
+        self.plant_img = self.create_img(1, 0, 50, 50, "default.jpg")
+        self.master.plant_menu_var.set('select plant')
+        self.master.plant_dropdown = self.create_menu(row=2, col=0, default=self.root.plant_menu_var, options=self.root.plant_types, event='plant_menu')        
+class InformationFrame(Frame):
+    def __init__(self, master, row, col, border=False):
+        super().__init__(master, row=row, col=col, border=border)
+
+        self.plant_description = self.create_label(text="plant description", row=0, col=0)
+        self.plant_water = self.create_label(text="plant water", row=1, col=0)
+        self.plant_nutrients = self.create_label(text="plant nutrients", row=2, col=0)   

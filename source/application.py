@@ -1,7 +1,7 @@
 import tkinter as tk
 from view import View
 from model import Model
-from controller import Controller1
+from controller import Controller
 import atexit
 
 class App(tk.Tk):
@@ -13,8 +13,10 @@ class App(tk.Tk):
         screen_height = self.winfo_screenheight()
 
         #window width
-        window_width = 15 * screen_width // 24
-        window_height = 15 * screen_height // 24
+        # window_width = 15 * screen_width // 24
+        # window_height = 15 * screen_height // 24
+        window_width = 5 * screen_width // 6
+        window_height = 5 * screen_height // 6
 
         # find the center point
         center_x = int(screen_width/2 - window_width / 2)
@@ -24,18 +26,18 @@ class App(tk.Tk):
         self.geometry(f'{window_width}x{window_height}+{center_x}+{center_y}')
         self.resizable(False, False)
 
-        self.grid_rowconfigure(0, weight=1)
-        self.grid_columnconfigure(0, weight=1)
+        self.grid_rowconfigure(0, weight='1')
+        self.grid_columnconfigure(0, weight='1')
 
         self.model = Model()
         self.view = View(self)
 
+
+        self.controller = Controller(self.model, self.view)
+        self.view.register_observer(self.controller)
+
         self.view.create_view(self.model.get_schedule())
-
-        self.controller = Controller1(self.model, self.view)
-
-        self.view.set_contoller(self.controller)
-
+        
         self.mainloop()
 
 

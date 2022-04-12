@@ -39,7 +39,7 @@ class Frame(Frame):
     def create_button(self, text: str, row: int, col: int, event: str, border=False, color='gray', font_size=12, fill=False) -> None:
         '''Return new button'''
 
-        button = tk.Button(master=self, text=text, command=lambda: self.master.actionPerformed(event), width=1, padx=1)
+        button = tk.Button(master=self, text=text, command=lambda: self.master.action_performed(event), width=1, padx=1)
         #button = tkm.Button(master=self, text=text, command=lambda: self.root.event_handler(event))
         button.grid(row=row, column=col)
 
@@ -65,7 +65,7 @@ class Frame(Frame):
 
     def create_menu(self, row: int, col: int, default: StringVar, options: list, event: str):
         '''Return new options menu'''
-        menu = ttk.OptionMenu(self, default, default.get(), *(options), command=lambda: self.master.actionPerformed(event))
+        menu = ttk.OptionMenu(self, default, default.get(), *(options), command=lambda: self.master.action_performed(event))
         menu.rowconfigure(0, weight=1)
         menu.columnconfigure(0, weight=1)
         menu.grid(row=row, column=col)
@@ -114,3 +114,4 @@ class Frame(Frame):
             table_frame.grid_rowconfigure(i, weight=1)
 
         return table_frame
+            
