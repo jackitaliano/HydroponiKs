@@ -1,0 +1,29 @@
+{
+    "tomato":{
+        "description":"tomatoes are fruits n shi and in tomato sauce and make pizza and very good",
+        "water":"they need some water",
+        "nutrients":"they also need nutrients",
+        "img_file":"tomato.jpg"
+    },
+
+    "cucumber": {
+        "description":"cucumbers are basically green water",
+        "water":"they already are water bruh",
+        "nutrients":"idek",
+        "img_file":"cucumber.jpg"
+    },
+
+    "pepper": {
+        "description":"peppers are spicy",
+        "water":"they do be needing water tho",
+        "nutrients":"also some other nutrients",
+        "img_file":"pepper.jpg"
+    },
+
+    "basil":{
+        "description":"basil fo your pizza",
+        "water":"water make em grow",
+        "nutrients":"green leaf need food too",
+        "img_file":"basil.jpg"
+    }
+}
