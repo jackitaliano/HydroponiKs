@@ -25,6 +25,19 @@ class Frame(ABC, tk.Frame):
     def create_button_table() -> tk.Frame:
         pass
 
+    @abstractclassmethod
+    def action_performed() -> None:
+        pass
+
+class Event(ABC):
+    @abstractclassmethod
+    def source():
+        pass
+
+    @abstractclassmethod
+    def __repr__(self) -> str:
+        pass
+
 class Frame(Frame):
     '''Generic Frame'''
     def __init__(self, master, row, col, border=False):
@@ -36,10 +49,10 @@ class Frame(Frame):
 
         self.grid(stick="nsew", row=row, column=col)
 
-    def create_button(self, text: str, row: int, col: int, event: str, border=False, color='gray', font_size=12, fill=False) -> None:
+    def create_button(self, text: str, row: int, col: int, event: Event, border=False, color='gray', font_size=12, fill=False) -> None:
         '''Return new button'''
 
-        button = tk.Button(master=self, text=text, command=lambda: self.master.action_performed(event), width=1, padx=1)
+        button = tk.Button(master=self, text=text, command=lambda: self.master.action_performed(event), width=1)
         #button = tkm.Button(master=self, text=text, command=lambda: self.root.event_handler(event))
         button.grid(row=row, column=col)
 
@@ -63,9 +76,9 @@ class Frame(Frame):
 
         return label
 
-    def create_menu(self, row: int, col: int, default: StringVar, options: list, event: str):
+    def create_menu(self, row: int, col: int, default: StringVar, options: list, event: Event):
         '''Return new options menu'''
-        menu = ttk.OptionMenu(self, default, default.get(), *(options), command=lambda: self.master.action_performed(event))
+        menu = ttk.OptionMenu(self, default, default.get(), *(options), command=lambda x: self.master.action_performed(event))
         menu.rowconfigure(0, weight=1)
         menu.columnconfigure(0, weight=1)
         menu.grid(row=row, column=col)
@@ -93,25 +106,36 @@ class Frame(Frame):
         for i, row in enumerate(table):
             for j, cell in enumerate(row):
                 if i == 0:
-                    table_frame.grid_columnconfigure(i, weight=1)
+                    table_frame.grid_columnconfigure(j, weight=1)
                     if cell == -1:
                         continue
                     b = ttk.Label(table_frame, text=str(cell))
                     b.grid(row=i, column=j)
 
                 elif cell == 1:
-                    b = table_frame.create_button(j - 1, i, j, f"{table[i][0]},{j - 1}", border=True, color='green', fill=True)
+                    b = table_frame.create_button(j - 1, i, j, Event("Schedule", f"{table[i][0]},{j - 1}"), border=True, color='green', fill=True)
 
                 elif cell == 0:
-                    b = table_frame.create_button("", i, j, f"{table[i][0]},{j - 1}", border=True, fill=True)
+                    b = table_frame.create_button("", i, j, Event("Schedule", f"{table[i][0]},{j - 1}"), border=True, fill=True)
 
                 else:
                     b = ttk.Label(table_frame, text=str(cell))
                     b.grid(row=i, column=j)
-
-                buttons.append(b)
             
             table_frame.grid_rowconfigure(i, weight=1)
 
         return table_frame
-            
+
+    def action_performed(self, e) -> None:
+        self.master.action_performed(e)
+
+class Event(Event):
+    def __init__(self, source, event):
+        self.source_str = source
+        self.event = event
+
+    def source(self):
+        return self.source_str
+    
+    def __repr__(self) -> str:
+        return self.event

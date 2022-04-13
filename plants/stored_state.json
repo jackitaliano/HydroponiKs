@@ -1,1 +1,1 @@
-{"type": "tomato", "water_level": 0, "schedule": {"Sun": [5, 7], "Mon": [1, 11], "Tue": [19, 8, 6, 16, 12], "Wed": [7, 16, 12], "Thu": [18, 8, 3, 14], "Fri": [10, 3], "Sat": [17, 5, 8, 7]}}
+{"type": "pepper", "water_level": 0, "schedule": {"Sun": [8, 21], "Mon": [8, 21], "Tue": [8, 21], "Wed": [8, 21], "Thu": [8, 21], "Fri": [8, 21], "Sat": [8, 21]}}

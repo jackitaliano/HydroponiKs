@@ -36,7 +36,8 @@ class App(tk.Tk):
         self.controller = Controller(self.model, self.view)
         self.view.register_observer(self.controller)
 
-        self.view.create_view(self.model.get_schedule())
+        self.view.create_view(self.model.get_schedule(), self.model.get_plant_type(), self.model.get_plant_types())
+        self.controller.update_view_to_match_model() 
         
         self.mainloop()
 

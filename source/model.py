@@ -29,7 +29,7 @@ class Model(Model):
 
         self.plant_type = ""
         self.water_level = 0
-        self.schedule = []
+        self.schedule = {}
 
         self.load_save_state()
 
@@ -38,6 +38,9 @@ class Model(Model):
 
     def set_pump_strength(self, strength):
         self.arduino.analog_write(self.arduino.pump_pin, strength)
+
+    def set_schedule(self, schedule):
+        self.schedule = schedule
 
     def get_plant_type(self):
         if not self.plant_type in self.plants: return 'select plant'
@@ -58,6 +61,10 @@ class Model(Model):
     def get_plant_img_file(self):
         if not self.plant_type in self.plants: return 'default.jpg'
         return self.plants[self.plant_type]["img_file"]
+
+    def get_plant_schedule(self):
+        if not self.plant_type in self.plants: return 'default.jpg'
+        return self.plants[self.plant_type]["schedule"]
 
     def get_plant_types(self):
         return [key for key in self.plants]

@@ -3,27 +3,63 @@
         "description":"tomatoes are fruits n shi and in tomato sauce and make pizza and very good",
         "water":"they need some water",
         "nutrients":"they also need nutrients",
-        "img_file":"tomato.jpg"
+        "img_file":"tomato.jpg",
+        "schedule": {
+            "Sun": [21,22], 
+            "Mon": [21,22], 
+            "Tue": [21,22], 
+            "Wed": [21,22], 
+            "Thu": [21,22], 
+            "Fri": [21,22], 
+            "Sat": [21,22]
+        }
     },
 
     "cucumber": {
         "description":"cucumbers are basically green water",
         "water":"they already are water bruh",
         "nutrients":"idek",
-        "img_file":"cucumber.jpg"
+        "img_file":"cucumber.jpg",
+        "schedule": {
+            "Sun": [9,20,21], 
+            "Mon": [9,20,21], 
+            "Tue": [9,20,21], 
+            "Wed": [9,20,21], 
+            "Thu": [9,20,21], 
+            "Fri": [9,20,21], 
+            "Sat": [9,20,21]
+        }
     },
 
     "pepper": {
         "description":"peppers are spicy",
         "water":"they do be needing water tho",
         "nutrients":"also some other nutrients",
-        "img_file":"pepper.jpg"
+        "img_file":"pepper.jpg",
+        "schedule": {
+            "Sun": [8,21], 
+            "Mon": [8,21], 
+            "Tue": [8,21], 
+            "Wed": [8,21], 
+            "Thu": [8,21], 
+            "Fri": [8,21], 
+            "Sat": [8,21]
+        }
     },
 
     "basil":{
         "description":"basil fo your pizza",
         "water":"water make em grow",
         "nutrients":"green leaf need food too",
-        "img_file":"basil.jpg"
+        "img_file":"basil.jpg",
+        "schedule": {
+            "Sun": [9,10], 
+            "Mon": [9,10], 
+            "Tue": [9,10], 
+            "Wed": [9,10], 
+            "Thu": [9,10], 
+            "Fri": [9,10], 
+            "Sat": [9,10]
+        }
     }
 }
