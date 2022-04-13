@@ -1,5 +1,5 @@
-# HydroponiKs
-**My first Python GUI project** <br/>
+# HydroponiKs - WIP
+**My first Python GUI project**<br/>
 OSU Engineering 1182 Design Project to produce a prototype for a project after doing market research, determining user needs, and evaluating how our idea meets those requirements. <br />
 
 **HydroponiKs**: GUI to connect with a hydroponics prototype system. <br/>
