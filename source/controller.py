@@ -1,12 +1,7 @@
-from abc import ABC, abstractclassmethod
 from pyfirmata import Arduino
+from MVCInterfaces import Controller
 
 PUMP_STRENGTH = 100
-
-class Controller(ABC):
-    @abstractclassmethod
-    def update_view_to_match_model(self):
-        pass
 class Controller(Controller):
     def __init__(self, model, view) -> None:
         self.model = model
@@ -23,14 +18,25 @@ class Controller(Controller):
         #get schedule
         schedule = self.model.get_schedule()
 
+        #get education modules
+        education = self.model.get_education_modules()
+
         #send updates
         self.view.update_plant_info(type, description, water, nutrients, img_file)
         self.view.update_schedule(schedule)
+        self.view.update_education_modules(education)
 
-    def turn_on_pump(self):
+    def update_water_level(self):
+        water_level = self.model.get_water_level()
+        #TODO update water level in view
+
+    def update_plant_type(self, type):
+        self.model.set_plant_type(type)
+
+    def process_turn_on_pump(self):
         self.model.set_pump_strength(PUMP_STRENGTH)
 
-    def turn_off_pump(self):
+    def process_turn_off_pump(self):
         self.model.set_pump_strength(0)
 
     def process_water_event(self):
@@ -45,6 +51,12 @@ class Controller(Controller):
 
     def process_load_plant_schedule_event(self):
         self.model.set_schedule(self.model.get_plant_schedule())
+
+        self.update_view_to_match_model()
+
+    def process_clear_schedule_event(self):
+        empty_schedule = {"Sun":[],"Mon":[],"Tue":[],"Wed":[],"Thu":[],"Fri":[],"Sat":[]}
+        self.model.set_schedule(empty_schedule)
 
         self.update_view_to_match_model()
 
@@ -64,12 +76,5 @@ class Controller(Controller):
         self.model.set_schedule(schedule)
 
         self.update_view_to_match_model()
-
-    def update_water_level(self):
-        water_level = self.model.get_water_level()
-        #TODO update water level in view
-
-    def update_plant_type(self, type):
-        self.model.set_plant_type(type)
 
 

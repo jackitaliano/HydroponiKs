@@ -36,13 +36,13 @@ class App(tk.Tk):
         self.controller = Controller(self.model, self.view)
         self.view.register_observer(self.controller)
 
-        self.view.create_view(self.model.get_schedule(), self.model.get_plant_type(), self.model.get_plant_types())
+        self.view.create_view(self.model.get_schedule(), self.model.get_plant_type(), self.model.get_plant_types(), self.model.get_education_modules())
         self.controller.update_view_to_match_model() 
-        
+
         self.mainloop()
 
 
 if __name__ == '__main__':
     app = App()
 
-    atexit.register(app.model.save_state)
+    atexit.register(app.model.dump_save_state)

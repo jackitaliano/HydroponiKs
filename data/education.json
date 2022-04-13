@@ -1,0 +1,14 @@
+{
+    "STEM_Overview":{
+        "text":"This project uses many different forms of STEM including coding, 3D modeling, 3D printing, hydroponics (working with plants), and working with a team. Teamwork is very important in STEM because all of these different parts have to come together, and each person has to contribute their part. This could be as simple as getting some of your friends to work together on something you want to make.",
+        "img_file":"STEM_Overview.jpg"
+    },
+    "STEM_Applications": {
+        "text":"This project is just one example of many of how you can apply STEM to your own life. Coding can be interactive and work with physical devices like this to accomplish any goal you want! 3D modeling and 3D printing can bring those creations to life! Hydroponics is just one example of many that are more specific because STEM can be in almost any field that fits you.",
+        "img_file":"STEM_Applications.jpg"
+    },
+    "Your_Impact": {
+        "text":"You can fix any problem that is affecting you or your community! There are many online resources to help you and there are more educational opportunities to come from this project. Get started with something simple that you want to make better in your house, or even just make a fun game. ",
+        "img_file":"Your_Impact.jpg"
+    }
+}
