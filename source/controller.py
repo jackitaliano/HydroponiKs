@@ -1,7 +1,7 @@
 from MVCInterfaces import Controller
 from datetime import datetime
 
-TIME_OFFSET_FOR_TESTING = 30
+TIME_OFFSET_FOR_TESTING = 0
 class Controller(Controller):
     def __init__(self, model, view) -> None:
         self.model = model
@@ -128,9 +128,9 @@ class Controller(Controller):
         if manual:
             self.model.set_manual_override_status(True)
 
-        if self.model.get_water_level() == "Low":
-            print("Error: Water level low, cannot turn on pump")
-            return
+        # if self.model.get_water_level() == "Low":
+        #     print("Error: Water level low, cannot turn on pump")
+        #     return
 
         # Set pump strength to PUMP_STRENGTH
         self.model.set_pump_active_status(True)

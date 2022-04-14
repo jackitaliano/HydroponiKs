@@ -1,4 +1,6 @@
 {
+    "comment":"!IMPORTANT! If arduino not connected, set active to FALSE to use GUI without ardunio, else TRUE",
+    "active": "FALSE",
     "com_port": "/dev/cu.usbmodem11301",
     "water_level_pin": "a:0:i",
     "pump_pin": "d:3:o",

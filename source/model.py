@@ -10,6 +10,8 @@ class Model(Model):
 
     def __init__(self) -> None:
         self.arduino = MyArduino()
+
+        self.arduino_active = self.arduino.active
         
         # Load plant types and education modules (remain static)
         self.load_plants()
@@ -46,6 +48,8 @@ class Model(Model):
         self.manual_overridden_status = status
 
     def set_pump_status(self, status):
+        if not self.arduino_active: return
+
         self.arduino.digital_write(self.arduino.pump_pin, status)
 
     def get_time(self):
@@ -109,6 +113,9 @@ class Model(Model):
 
     def update_water_level(self):
         # Return water level read from arduino
+        if not self.arduino_active: 
+            self.water_level = "NOT CONNECTED"
+            return
 
         level = self.arduino.analog_read(self.arduino.water_level_pin)
 
@@ -155,7 +162,9 @@ class MyArduino(Arduino):
         #try connecting to serial monitor
         try:
             self.config()
-            print(self.com_port)
+
+            if not self.active:
+                raise self.ArduinoException("Arduino Inactive")
 
             self.board = Arduino(self.com_port)
 
@@ -164,14 +173,31 @@ class MyArduino(Arduino):
 
             self.water_level_pin = self.board.get_pin(self.water_level_pin_config)
             self.pump_pin= self.board.get_pin(self.pump_pin_config)
+
+            self.active = True
             print("Connected successfully!")
+
+        except self.ArduinoException as error:
+            print(f"Connecting unsuccesful: {error}")
+            print("Proceeding without connection...")
+            self.active = False
+
         except:
-            print('Connection unsuccessful. Quiting...')
+            print('Connection unsuccessful. Quitting...')
             quit()
 
     def config(self):
         with open(os.path.join('data', 'arduino_config.json'), 'r') as file:
             config = json.load(file)
+
+            active = config['active']
+            if active == "FALSE":
+                self.active = False
+            elif active == "TRUE":
+                self.active = True
+            else:
+                raise self.ArduinoException("Invalid Arduino Active Status")
+
             self.com_port = config['com_port']
             self.pump_strength = config['pump_strength']
 
@@ -187,3 +213,6 @@ class MyArduino(Arduino):
 
     def digital_write(self, pin, val):
         pin.write(val)
+
+    class ArduinoException(Exception):
+        pass
