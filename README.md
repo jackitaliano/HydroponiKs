@@ -4,7 +4,7 @@ OSU Engineering 1182 Design Project to produce a prototype for a project after d
 
 **HydroponiKs**: GUI to connect with a hydroponics prototype system. <br/>
 
-A GUI using Tkinter <br/>
+A GUI using Tkinter connected to arduino <br/>
 -data/schedule is stored and easily accessible </br>
 -json files contain all plant information and education modules for easy access to add or remove plants/modules <br/>
 -MVC design pattern to easily change GUI view or have alternate forms of data collection <br/>
@@ -26,6 +26,12 @@ A GUI using Tkinter <br/>
   <li><i>Education Modules</li>
     <ul>
       <li>Display education modules including an overview of STEM, the applications of STEM, and how you can impact your community with STEM</li>
+    </ul>
+  </li>
+  <li><i>Arduino</li>
+    <ul>
+     <li>Turns water pump on and off based on current active schedule </li>
+     <li>Gets water level of hydroponics reservoir, sends alert if water is low and prevents pump from turning on</li>
     </ul>
   </li>
  </ul>
