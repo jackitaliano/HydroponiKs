@@ -4,16 +4,12 @@ import copy
 from pyfirmata import Arduino, util
 from MVCInterfaces import Model
 
-PUMP_PIN = 13
-WATER_LEVEL_PIN = 0
-COM_PORT = "/dev/cu.usbmodem11301"
-
 class Model(Model):
     plants : dict
     education_modules : dict
 
     def __init__(self) -> None:
-        self.arduino = MyArduino(COM_PORT)
+        self.arduino = MyArduino()
         
         # Load plant types and education modules (remain static)
         self.load_plants()
@@ -49,9 +45,8 @@ class Model(Model):
     def set_manual_override_status(self, status):
         self.manual_overridden_status = status
 
-    def set_pump_strength(self, strength):
-        # Write pump strength to arduino
-        self.arduino.analog_write(self.arduino.pump_pin, strength)
+    def set_pump_status(self, status):
+        self.arduino.digital_write(self.arduino.pump_pin, status)
 
     def get_time(self):
         return self.time
@@ -110,13 +105,16 @@ class Model(Model):
         return copy.deepcopy(Model.education_modules)
 
     def get_water_level(self):
-        if self.water_level < 0.1: return "Low"
-        if self.water_level >= 0.1 and self.water_level < .23: return "Medium"
-        if self.water_level >= .22: return "High"
+        return self.water_level
 
     def update_water_level(self):
         # Return water level read from arduino
-        self.water_level = self.arduino.analog_read(self.arduino.water_level_pin)
+
+        level = self.arduino.analog_read(self.arduino.water_level_pin)
+
+        if level == None or level < 0.1: self.water_level = "Low"
+        if level >= 0.1 and level < .23: self.water_level = "Medium"
+        if level >= .22: self.water_level = "High"
 
     def load_plants(self):
         # Load plants from json to plant dict
@@ -152,28 +150,34 @@ class Model(Model):
         with open(os.path.join('data', 'plants.json'), 'w') as file:
             json.dump(Model.plants, file, indent=4)
 
-    def turn_on_led(self):
-        self.arduino.digital_write(self.arduino.led_pin, 1)
-
-    def turn_off_led(self):
-        self.arduino.digital_write(self.arduino.led_pin, 0)
-
 class MyArduino(Arduino):
-    def __init__(self, com_port):
+    def __init__(self):
         #try connecting to serial monitor
         try:
-            self.board = Arduino(com_port)
+            self.config()
+            print(self.com_port)
+
+            self.board = Arduino(self.com_port)
 
             it = util.Iterator(self.board)
             it.start()
 
-            # self.pump_pin = self.board.get_pin(f'd:{PUMP_PIN}:o')
-            self.water_level_pin = self.board.get_pin(f'a:{WATER_LEVEL_PIN}:i')
-            self.led_pin = self.board.get_pin('d:13:o')
+            self.water_level_pin = self.board.get_pin(self.water_level_pin_config)
+            self.pump_pin= self.board.get_pin(self.pump_pin_config)
             print("Connected successfully!")
         except:
             print('Connection unsuccessful. Quiting...')
             quit()
+
+    def config(self):
+        with open(os.path.join('data', 'arduino_config.json'), 'r') as file:
+            config = json.load(file)
+            self.com_port = config['com_port']
+            self.pump_strength = config['pump_strength']
+
+            self.pump_pin_config = config['pump_pin']
+            self.water_level_pin_config = config['water_level_pin']
+            
 
     def analog_write(pin, val):
         pin.write(val)

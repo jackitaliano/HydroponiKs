@@ -1,7 +1,6 @@
 from MVCInterfaces import Controller
 from datetime import datetime
 
-PUMP_STRENGTH = 100
 TIME_OFFSET_FOR_TESTING = 30
 class Controller(Controller):
     def __init__(self, model, view) -> None:
@@ -37,10 +36,6 @@ class Controller(Controller):
         # time = datetime.now().hour
         time = datetime.now().minute
         self.model.set_time((weekday, time - TIME_OFFSET_FOR_TESTING))
-
-    def update_water_level(self):
-        water_level = self.model.get_water_level()
-        #TODO update water level in view
 
     def handle_time(self):
         self.update_time()
@@ -123,8 +118,6 @@ class Controller(Controller):
         self.update_view_to_match_model()
 
     def process_turn_on_pump_event(self, manual=False):
-        # Set pump strength to PUMP_STRENGTH
-        # self.model.set_pump_strength(PUMP_STRENGTH)
 
         pump_active = self.model.get_pump_active_status()
         manual_override = self.model.get_manual_override_status()
@@ -135,13 +128,16 @@ class Controller(Controller):
         if manual:
             self.model.set_manual_override_status(True)
 
+        if self.model.get_water_level() == "Low":
+            print("Error: Water level low, cannot turn on pump")
+            return
+
+        # Set pump strength to PUMP_STRENGTH
         self.model.set_pump_active_status(True)
-        self.model.turn_on_led()
+        self.model.set_pump_status(1)
         print("Turning on pump...")
     
     def process_turn_off_pump_event(self, manual=False):
-        # Set pump strength to 0
-        # self.model.set_pump_strength(0)
 
         pump_active = self.model.get_pump_active_status()
         manual_override = self.model.get_manual_override_status()
@@ -152,11 +148,11 @@ class Controller(Controller):
         if manual:
             self.model.set_manual_override_status(True)
 
+        # Set pump strength to 0
         self.model.set_pump_active_status(False)
-        self.model.turn_off_led()
+        self.model.set_pump_status(0)
         print("Turning off pump...")
 
     def exit(self):
         self.model.dump_save_state()
-        self.model.turn_off_led()
         self.process_turn_off_pump_event()

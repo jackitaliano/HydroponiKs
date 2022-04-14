@@ -25,7 +25,7 @@ class Model(ABC):
         '''Set status of manual override'''
 
     @abstractclassmethod
-    def set_pump_strength(self, strength: int) -> None:
+    def set_pump_status(self, status: int) -> None:
         '''Set strength of pump on arduino'''
 
     @abstractclassmethod
@@ -139,10 +139,6 @@ class Controller(ABC):
     @abstractclassmethod
     def update_time(self) -> None:
         '''Update time of model (day,time)'''
-        
-    @abstractclassmethod
-    def update_water_level(self) -> None:
-        '''Update model water level'''
 
     @abstractclassmethod
     def handle_time(self) -> None:

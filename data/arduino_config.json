@@ -1,0 +1,6 @@
+{
+    "com_port": "/dev/cu.usbmodem11301",
+    "water_level_pin": "a:0:i",
+    "pump_pin": "d:3:o",
+    "pump_strength": "100"
+}
