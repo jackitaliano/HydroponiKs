@@ -187,7 +187,7 @@ class MyArduino(Arduino):
             quit()
 
     def config(self):
-        with open(os.path.join('data', 'arduino_config.json'), 'r') as file:
+        with open(os.path.join('config', 'arduino_config.json'), 'r') as file:
             config = json.load(file)
 
             active = config['active']
