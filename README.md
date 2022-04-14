@@ -1,13 +1,18 @@
 # HydroponiKs - WIP
-**My first Python GUI project**<br/>
+**Goal**<br/>
 OSU Engineering 1182 Design Project to produce a prototype for a project after doing market research, determining user needs, and evaluating how our idea meets those requirements. <br />
 
-**HydroponiKs**: GUI to connect with a hydroponics prototype system. <br/>
+**Overview**: GUI to connect with a hydroponics prototype system. <br/>
 
-A GUI using Tkinter connected to arduino <br/>
--data/schedule is stored and easily accessible </br>
--json files contain all plant information and education modules for easy access to add or remove plants/modules <br/>
--MVC design pattern to easily change GUI view or have alternate forms of data collection <br/>
+<ul>
+  <li>Tkinter GUI </li>
+  <li>Pyfirmata python library and Firmata Arduino firmware to connect GUI to hardware</li>
+  <li>Data/schedule is stored and easily accessible </li>
+  <li>JSON files contain all plant information and education modules for easy access to add or remove plants/modules </li>
+  <li>MVC design pattern to easily change GUI view or have alternate forms of data collection </li>
+</ul>
+
+**Components** <br/>
 
  <ul> 
   <li><i>Scheduling</i>
@@ -32,6 +37,7 @@ A GUI using Tkinter connected to arduino <br/>
     <ul>
      <li>Turns water pump on and off based on current active schedule </li>
      <li>Gets water level of hydroponics reservoir, sends alert if water is low and prevents pump from turning on</li>
+     <li>Protection against arduino disconnection</li>
     </ul>
   </li>
  </ul>
