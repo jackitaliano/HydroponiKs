@@ -1,7 +1,7 @@
 import os
 import copy
 from pyfirmata import Arduino, util
-from MVCInterfaces import Model
+from Interfaces.Model_Interface import Model
 import json_methods
 
 DEV_CONFIG_FILE_PATH = os.path.join('config', 'dev-config.json')

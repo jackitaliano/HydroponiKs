@@ -3,7 +3,8 @@ import json_methods
 from PIL import ImageTk, Image
 import tkinter as tk
 from tkinter import StringVar, ttk
-from MVCInterfaces import View, Frame, Event
+from Interfaces.View_Interface import View
+from Interfaces.Sub_Interfaces import Frame, Event
 
 DEV_CONFIG_FILE_PATH = os.path.join('config', 'dev-config.json')
 DEV_CONFIG = json_methods.load_json(DEV_CONFIG_FILE_PATH)

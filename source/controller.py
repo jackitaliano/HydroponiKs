@@ -1,4 +1,4 @@
-from MVCInterfaces import Controller
+from Interfaces.Controller_Interface import Controller
 from datetime import datetime
 import json_methods
 import os
