@@ -24,7 +24,7 @@ __Overview:__ <br/>
     <ul>
       <li>Custom schedules for watering</li>
       <li>Load default schedules for selected plant types</li>
-      <li>Clear scheduling to make your own or add/remove times from the default schedules</li>
+      <li>Toggle buttons on schedule allow for adding/removing times from schedule</li>
       <li>Manual controls for turning on and off watering</li>
     </ul>
   </li>
@@ -51,7 +51,7 @@ __Overview:__ <br/>
  __How to use:__ <br/>
  <ol>
   <li>Run "pip install /your_path/config/requirements.txt" in command line</li>
-  <li>Set config/arduino_config "active" to FALSE (unless proper Arduino is connected)</li>
+  <li>Ensure config/arduino_config "active" set to FALSE (unless proper Arduino is connected)</li>
   <li>Run app.py</li>
  </ol>
  
