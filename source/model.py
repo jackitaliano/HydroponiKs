@@ -2,14 +2,12 @@ import os
 import copy
 from Interfaces.Model_Interface import Model
 from arduino import Arduino
+from config import DEV_CONFIG
 import json_methods
-
-DEV_CONFIG_FILE_PATH = os.path.join('config', 'dev-config.json')
-DEV_CONFIG = json_methods.load_json(DEV_CONFIG_FILE_PATH)
 
 EDUCATION_FILE_PATH = os.path.join(DEV_CONFIG['data_folder'], DEV_CONFIG['education_file'])
 PLANTS_FILE_PATH = os.path.join(DEV_CONFIG['data_folder'], DEV_CONFIG['plants_file'])
-STATE_FILE_PATH = os.path.join(DEV_CONFIG['data_folder'], DEV_CONFIG['save_file'])
+SAVE_FILE_PATH = os.path.join(DEV_CONFIG['data_folder'], DEV_CONFIG['save_file'])
 
 class Model(Model):
     plants : dict
@@ -141,7 +139,7 @@ class Model(Model):
 
     def load_save_state(self):
         # Load save state (plant type, water level, schedule)
-        state = json_methods.load_json(STATE_FILE_PATH)
+        state = json_methods.load_json(SAVE_FILE_PATH)
 
         self.plant_type = state["type"]
         self.water_level = state["water_level"]
@@ -158,4 +156,4 @@ class Model(Model):
             "custom_schedules": self.custom_schedules
         }
         
-        json_methods.dump_json(state, STATE_FILE_PATH, pretty=True)
+        json_methods.dump_json(state, SAVE_FILE_PATH, pretty=True)

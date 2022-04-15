@@ -1,10 +1,6 @@
 from Interfaces.Controller_Interface import Controller
 from datetime import datetime
-import json_methods
-import os
-
-DEV_CONFIG_FILE_PATH = os.path.join('config', 'dev-config.json')
-DEV_CONFIG = json_methods.load_json(DEV_CONFIG_FILE_PATH)
+from config import DEV_CONFIG
 class Controller(Controller):
     def __init__(self, model, view) -> None:
         self.model = model
@@ -161,9 +157,6 @@ class Controller(Controller):
         self.model.set_pump_active_status(False)
         self.model.set_pump_status(0)
         print("Turning off pump...")
-
-    def load_config(self):
-        return json_methods.load_json(DEV_CONFIG_FILE_PATH)
 
     def exit(self):
         self.model.dump_save_state()

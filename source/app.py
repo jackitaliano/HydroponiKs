@@ -2,12 +2,8 @@ import tkinter as tk
 from view import View
 from model import Model
 from controller import Controller
+from config import DEV_CONFIG
 import atexit
-import json_methods
-import os
-
-DEV_CONFIG_FILE_PATH = os.path.join('config', 'dev-config.json')
-DEV_CONFIG = json_methods.load_json(DEV_CONFIG_FILE_PATH)
 
 class App(tk.Tk):
     def __init__(self) -> None:

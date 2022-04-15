@@ -1,13 +1,11 @@
 import os
-import json_methods
 from PIL import ImageTk, Image
 import tkinter as tk
 from tkinter import StringVar, ttk
 from Interfaces.View_Interface import View
 from Interfaces.Sub_Interfaces import Frame, Event
-
-DEV_CONFIG_FILE_PATH = os.path.join('config', 'dev-config.json')
-DEV_CONFIG = json_methods.load_json(DEV_CONFIG_FILE_PATH)
+from config import DEV_CONFIG
+import json_methods 
 class Frame(Frame):
     def __init__(self, master, row, col, border=False):
         super().__init__(master)
