@@ -4,6 +4,11 @@ import copy
 from pyfirmata import Arduino, util
 from MVCInterfaces import Model
 
+CONFIG_FILE_PATH = os.path.join('config', 'arduino_config.json')
+EDUCATION_FILE_PATH = os.path.join('data', 'education.json')
+PLANTS_FILE_PATH = os.path.join('data', 'plants.json')
+STATE_FILE_PATH = os.path.join('data', 'stored_state.json')
+
 class Model(Model):
     plants : dict
     education_modules : dict
@@ -125,17 +130,17 @@ class Model(Model):
 
     def load_plants(self):
         # Load plants from json to plant dict
-        with open(os.path.join("data", "plants.json"), 'r') as file:
+        with open(PLANTS_FILE_PATH, 'r') as file:
             Model.plants = json.load(file)
 
     def load_education_modules(self):
         # Load education modules from json to education modules dict
-        with open(os.path.join("data", "education.json"), 'r') as file:
+        with open(EDUCATION_FILE_PATH, 'r') as file:
             Model.education_modules = json.load(file)
 
     def load_save_state(self):
         # Load save state (plant type, water level, schedule)
-        with open(os.path.join("data", "stored_state.json"), 'r') as file:
+        with open(STATE_FILE_PATH, 'r') as file:
             state = json.load(file)
 
             self.plant_type = state["type"]
@@ -150,11 +155,11 @@ class Model(Model):
             "schedule": self.schedule
         }
         
-        with open(os.path.join('data', 'stored_state.json'), 'w') as file:
+        with open(STATE_FILE_PATH, 'w') as file:
             json.dump(state, file, indent=4)
 
         # Dump plants state (for custom schedules)
-        with open(os.path.join('data', 'plants.json'), 'w') as file:
+        with open(PLANTS_FILE_PATH, 'w') as file:
             json.dump(Model.plants, file, indent=4)
 
 class MyArduino(Arduino):
@@ -182,12 +187,13 @@ class MyArduino(Arduino):
             print("Proceeding without connection...")
             self.active = False
 
-        except:
-            print('Connection unsuccessful. Quitting...')
+        except Exception as error:
+            print(f"Error: {error}")
+            print("Connection unsuccessful. Quitting...")
             quit()
 
     def config(self):
-        with open(os.path.join('config', 'arduino_config.json'), 'r') as file:
+        with open(CONFIG_FILE_PATH, 'r') as file:
             config = json.load(file)
 
             active = config['active']
