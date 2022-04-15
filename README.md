@@ -47,3 +47,15 @@ __Overview:__ <br/>
     </ul>
   </li>
  </ul>
+ 
+ __How to use:__ <br/>
+ <ol>
+  <li>Run "pip install /your_path/config/requirements.txt" in command line</li>
+  <li>Set config/arduino_config "active" to FALSE (unless proper Arduino is connected)</li>
+  <li>Run app.py</li>
+ </ol>
+ 
+ __Screenshots:__ <br/>
+ <img width="1012" alt="Screen Shot 2022-04-15 at 10 40 21 AM" src="https://user-images.githubusercontent.com/93797825/163584307-f2a9b6de-596f-47b6-97a6-de3d35848bb4.png">
+Other pages information in text WIP
+
