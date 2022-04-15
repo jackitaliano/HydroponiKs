@@ -1,0 +1,12 @@
+{
+    "update_time_ms": 2000,
+    "time_scale" : "minute",
+    "time_offset": 10,
+
+    "data_folder": "data",
+    "assets_folder": "assets",
+
+    "education_file": "education.json",
+    "plants_file": "plants.json",
+    "state_file": "save_state.json"
+}

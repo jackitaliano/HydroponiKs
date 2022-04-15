@@ -3,8 +3,11 @@ from view import View
 from model import Model
 from controller import Controller
 import atexit
+import json_methods
+import os
 
-MS_BETWEEN_UPDATE_TIME = 2000
+DEV_CONFIG_FILE_PATH = os.path.join('config', 'dev-config.json')
+DEV_CONFIG = json_methods.load_json(DEV_CONFIG_FILE_PATH)
 
 class App(tk.Tk):
     def __init__(self) -> None:
@@ -44,14 +47,14 @@ class App(tk.Tk):
         self.view.create_view(self.model.get_schedule(), self.model.get_plant_type(), self.model.get_plant_types(), self.model.get_education_modules())
         self.controller.update_view_to_match_model() 
 
-        self.after(MS_BETWEEN_UPDATE_TIME, self.update_controller_time_for_schedule)
+        self.after(DEV_CONFIG['update_time_ms'], self.update_controller_time_for_schedule)
 
         self.mainloop()
 
     def update_controller_time_for_schedule(self):
         self.controller.handle_time()
 
-        self.after(MS_BETWEEN_UPDATE_TIME, self.update_controller_time_for_schedule)
+        self.after(DEV_CONFIG['update_time_ms'], self.update_controller_time_for_schedule)
 
 
 if __name__ == '__main__':

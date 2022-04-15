@@ -1,277 +1,62 @@
 {
     "tomato": {
-        "description": "tomatoes are fruits n shi and in tomato sauce and make pizza and very good",
-        "water": "they need some water",
-        "nutrients": "they also need nutrients",
+        "description": "tomato description placeholder",
+        "water": "tomato water placeholder",
+        "nutrients": "tomato nutrients placeholder",
         "img_file": "tomato.jpg",
         "default_schedule": {
-            "Sun": [
-                21,
-                22
-            ],
-            "Mon": [
-                21,
-                22
-            ],
-            "Tue": [
-                21,
-                22
-            ],
-            "Wed": [
-                21,
-                22
-            ],
-            "Thu": [
-                21,
-                22
-            ],
-            "Fri": [
-                21,
-                22
-            ],
-            "Sat": [
-                21,
-                22
-            ]
-        },
-        "custom_schedule": {
-            "Sun": [
-                21,
-                22
-            ],
-            "Mon": [
-                21,
-                22,
-                13
-            ],
-            "Tue": [
-                21,
-                22,
-                13
-            ],
-            "Wed": [
-                21,
-                22,
-                13
-            ],
-            "Thu": [
-                21,
-                22,
-                13
-            ],
-            "Fri": [
-                21,
-                22
-            ],
-            "Sat": [
-                21,
-                22
-            ]
+            "Sun": [20,21],
+            "Mon": [20,21],
+            "Tue": [20,21],
+            "Wed": [20,21],
+            "Thu": [20,21],
+            "Fri": [20,21],
+            "Sat": [20,21]
         }
     },
     "cucumber": {
-        "description": "cucumbers are basically green water la da dee de da doo dadadadad la da dada la da dada duh",
-        "water": "they already are water bruh",
-        "nutrients": "idek",
+        "description": "cucumber description placeholder",
+        "water": "cucumber water placeholder",
+        "nutrients": "cucumber nutrients placeholder",
         "img_file": "cucumber.jpg",
         "default_schedule": {
-            "Sun": [
-                9,
-                20,
-                21
-            ],
-            "Mon": [
-                9,
-                20,
-                21
-            ],
-            "Tue": [
-                9,
-                20,
-                21
-            ],
-            "Wed": [
-                9,
-                20,
-                21
-            ],
-            "Thu": [
-                9,
-                20,
-                21
-            ],
-            "Fri": [
-                9,
-                20,
-                21
-            ],
-            "Sat": [
-                9,
-                20,
-                21
-            ]
-        },
-        "custom_schedule": {
-            "Sun": [
-                9,
-                20,
-                21
-            ],
-            "Mon": [
-                9,
-                20,
-                21,
-                17
-            ],
-            "Tue": [
-                9,
-                20,
-                21,
-                12,
-                17,
-                6
-            ],
-            "Wed": [
-                9,
-                20,
-                21,
-                12,
-                6
-            ],
-            "Thu": [
-                9,
-                20,
-                21,
-                12
-            ],
-            "Fri": [
-                9,
-                20,
-                21
-            ],
-            "Sat": [
-                9,
-                20,
-                21
-            ]
+            "Sun": [8,9,20,21],
+            "Mon": [8,9,20,21],
+            "Tue": [8,9,20,21],
+            "Wed": [8,9,20,21],
+            "Thu": [8,9,20,21],
+            "Fri": [8,9,20,21],
+            "Sat": [8,9,20,21]
         }
     },
     "pepper": {
-        "description": "peppers are spicy",
-        "water": "they do be needing water tho",
-        "nutrients": "also some other nutrients",
+        "description": "pepper description placeholder",
+        "water": "pepper water placeholder",
+        "nutrients": "pepper nutrients placeholder",
         "img_file": "pepper.jpg",
         "default_schedule": {
-            "Sun": [
-                8,
-                21
-            ],
-            "Mon": [
-                8,
-                21
-            ],
-            "Tue": [
-                8,
-                21
-            ],
-            "Wed": [
-                8,
-                21
-            ],
-            "Thu": [
-                8,
-                21
-            ],
-            "Fri": [
-                8,
-                21
-            ],
-            "Sat": [
-                8,
-                21
-            ]
-        },
-        "custom_schedule": {
-            "Sun": [
-                8,
-                21,
-                9
-            ],
-            "Mon": [
-                8,
-                21,
-                9
-            ],
-            "Tue": [
-                8,
-                21,
-                9
-            ],
-            "Wed": [
-                8,
-                21,
-                9
-            ],
-            "Thu": [
-                8,
-                21,
-                9
-            ],
-            "Fri": [
-                8,
-                21,
-                9
-            ],
-            "Sat": [
-                8,
-                21,
-                9
-            ]
+            "Sun": [8,20],
+            "Mon": [8,20],
+            "Tue": [8,20],
+            "Wed": [8,20],
+            "Thu": [8,20],
+            "Fri": [8,20],
+            "Sat": [8,20]
         }
     },
     "basil": {
-        "description": "basil fo your pizza",
-        "water": "water make em grow",
-        "nutrients": "green leaf need food too",
+        "description": "basil description placeholder",
+        "water": "basil water placeholder",
+        "nutrients": "basil nutrients placeholder",
         "img_file": "basil.jpg",
         "default_schedule": {
-            "Sun": [
-                9,
-                10
-            ],
-            "Mon": [
-                9,
-                10
-            ],
-            "Tue": [
-                9,
-                10
-            ],
-            "Wed": [
-                9,
-                10
-            ],
-            "Thu": [
-                9,
-                10
-            ],
-            "Fri": [
-                9,
-                10
-            ],
-            "Sat": [
-                9,
-                10
-            ]
-        },
-        "custom_schedule": {
-            "Sun": [],
-            "Mon": [],
-            "Tue": [],
-            "Wed": [],
-            "Thu": [],
-            "Fri": [],
-            "Sat": []
+            "Sun": [8],
+            "Mon": [8],
+            "Tue": [8],
+            "Wed": [8],
+            "Thu": [8],
+            "Fri": [8],
+            "Sat": [8]
         }
     }
 }

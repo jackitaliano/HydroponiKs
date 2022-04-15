@@ -1,7 +1,10 @@
 from MVCInterfaces import Controller
 from datetime import datetime
+import json_methods
+import os
 
-TIME_OFFSET_FOR_TESTING = 0
+DEV_CONFIG_FILE_PATH = os.path.join('config', 'dev-config.json')
+DEV_CONFIG = json_methods.load_json(DEV_CONFIG_FILE_PATH)
 class Controller(Controller):
     def __init__(self, model, view) -> None:
         self.model = model
@@ -33,9 +36,15 @@ class Controller(Controller):
 
     def update_time(self):
         weekday = datetime.today().strftime('%A')[0:3]
-        # time = datetime.now().hour
-        time = datetime.now().minute
-        self.model.set_time((weekday, time - TIME_OFFSET_FOR_TESTING))
+
+        if DEV_CONFIG['time_scale'] == 'hour':
+            time = datetime.now().hour
+        elif DEV_CONFIG['time_scale'] == 'minute':
+            time = datetime.now().minute
+        else:
+            raise Exception("Invalid time scale")
+
+        self.model.set_time((weekday, time - DEV_CONFIG['time_offset']))
 
     def handle_time(self):
         self.update_time()
@@ -128,9 +137,9 @@ class Controller(Controller):
         if manual:
             self.model.set_manual_override_status(True)
 
-        # if self.model.get_water_level() == "Low":
-        #     print("Error: Water level low, cannot turn on pump")
-        #     return
+        if self.model.get_water_level() == "Low":
+            print("Error: Water level low, cannot turn on pump")
+            return
 
         # Set pump strength to PUMP_STRENGTH
         self.model.set_pump_active_status(True)
@@ -152,6 +161,9 @@ class Controller(Controller):
         self.model.set_pump_active_status(False)
         self.model.set_pump_status(0)
         print("Turning off pump...")
+
+    def load_config(self):
+        return json_methods.load_json(DEV_CONFIG_FILE_PATH)
 
     def exit(self):
         self.model.dump_save_state()

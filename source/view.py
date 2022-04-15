@@ -1,9 +1,12 @@
 import os
+import json_methods
+from PIL import ImageTk, Image
 import tkinter as tk
 from tkinter import StringVar, ttk
-from PIL import ImageTk, Image
 from MVCInterfaces import View, Frame, Event
 
+DEV_CONFIG_FILE_PATH = os.path.join('config', 'dev-config.json')
+DEV_CONFIG = json_methods.load_json(DEV_CONFIG_FILE_PATH)
 class Frame(Frame):
     def __init__(self, master, row, col, border=False):
         super().__init__(master)
@@ -27,7 +30,8 @@ class Frame(Frame):
             button.grid(sticky="nsew")
         if border:
             button['highlightbackground'] = color
-            button['highlightthickness'] = '0.5'
+            button['highlightthickness'] = '0.75'
+            button['bg'] = color
         button['font'] = f'Arial, {font_size}'
 
         return button
@@ -56,7 +60,7 @@ class Frame(Frame):
 
     def create_img(self, row, col, width, height, img_file):
         # Create new PIL image
-        img = Image.open((os.path.join('assets', img_file)))
+        img = Image.open((os.path.join(DEV_CONFIG['assets_folder'], img_file)))
         img = img.resize((width, height), Image.ANTIALIAS)
         img = ImageTk.PhotoImage(img)
 

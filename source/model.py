@@ -1,13 +1,18 @@
-import json
 import os
 import copy
 from pyfirmata import Arduino, util
 from MVCInterfaces import Model
+import json_methods
 
-CONFIG_FILE_PATH = os.path.join('config', 'arduino_config.json')
-EDUCATION_FILE_PATH = os.path.join('data', 'education.json')
-PLANTS_FILE_PATH = os.path.join('data', 'plants.json')
-STATE_FILE_PATH = os.path.join('data', 'stored_state.json')
+DEV_CONFIG_FILE_PATH = os.path.join('config', 'dev-config.json')
+ARDUINO_CONFIG_FILE_PATH = os.path.join('config', 'arduino-config.json')
+
+DEV_CONFIG = json_methods.load_json(DEV_CONFIG_FILE_PATH)
+ARDUINO_CONFIG = json_methods.load_json(ARDUINO_CONFIG_FILE_PATH)
+
+EDUCATION_FILE_PATH = os.path.join(DEV_CONFIG['data_folder'], DEV_CONFIG['education_file'])
+PLANTS_FILE_PATH = os.path.join(DEV_CONFIG['data_folder'], DEV_CONFIG['plants_file'])
+STATE_FILE_PATH = os.path.join(DEV_CONFIG['data_folder'], DEV_CONFIG['state_file'])
 
 class Model(Model):
     plants : dict
@@ -26,6 +31,7 @@ class Model(Model):
         self.plant_type : str
         self.water_level : int
         self.schedule : dict
+        self.custom_schedules: dict
         self.time = (0,0)
         self.pump_active_status = False
         self.manual_overridden_status = False
@@ -41,7 +47,7 @@ class Model(Model):
 
     def set_plant_custom_schedule(self):
         # Set current plant custom schedule to a deepcopy of schedule (avoids aliasing)
-        self.plants[self.plant_type]['custom_schedule'] = copy.deepcopy(self.schedule)
+        self.custom_schedules[self.plant_type] = copy.deepcopy(self.schedule)
 
     def set_time(self, time):
         self.time = time
@@ -98,8 +104,8 @@ class Model(Model):
 
     def get_plant_custom_schedule(self):
         # Return plant schedule or default
-        if not self.plant_type in Model.plants: return {"Sun":[],"Mon":[],"Tue":[],"Wed":[],"Thu":[],"Fri":[],"Sat":[]}
-        return Model.plants[self.plant_type]["custom_schedule"]
+        if not self.plant_type in self.custom_schedules: return {"Sun":[],"Mon":[],"Tue":[],"Wed":[],"Thu":[],"Fri":[],"Sat":[]}
+        return self.custom_schedules[self.plant_type]
 
     def get_plant_types(self):
         # Return list of each plant type
@@ -130,54 +136,56 @@ class Model(Model):
 
     def load_plants(self):
         # Load plants from json to plant dict
-        with open(PLANTS_FILE_PATH, 'r') as file:
-            Model.plants = json.load(file)
+        Model.plants = json_methods.load_json(PLANTS_FILE_PATH)
 
     def load_education_modules(self):
         # Load education modules from json to education modules dict
-        with open(EDUCATION_FILE_PATH, 'r') as file:
-            Model.education_modules = json.load(file)
+        Model.education_modules = json_methods.load_json(EDUCATION_FILE_PATH)
 
     def load_save_state(self):
         # Load save state (plant type, water level, schedule)
-        with open(STATE_FILE_PATH, 'r') as file:
-            state = json.load(file)
+        state = json_methods.load_json(STATE_FILE_PATH)
 
-            self.plant_type = state["type"]
-            self.water_level = state["water_level"]
-            self.schedule = state["schedule"]
+        self.plant_type = state["type"]
+        self.water_level = state["water_level"]
+        self.schedule = state["schedule"]
+        self.custom_schedules = state["custom_schedules"]
 
     def dump_save_state(self):
         # Dump save state (plant type, water level, schedule)
+
         state = {
             "type": self.plant_type,
             "water_level": self.water_level,
-            "schedule": self.schedule
+            "schedule": self.schedule,
+            "custom_schedules": self.custom_schedules
         }
         
-        with open(STATE_FILE_PATH, 'w') as file:
-            json.dump(state, file, indent=4)
-
-        # Dump plants state (for custom schedules)
-        with open(PLANTS_FILE_PATH, 'w') as file:
-            json.dump(Model.plants, file, indent=4)
+        json_methods.dump_json(state, STATE_FILE_PATH, pretty=True)
 
 class MyArduino(Arduino):
     def __init__(self):
         #try connecting to serial monitor
         try:
-            self.config()
+
+            active = ARDUINO_CONFIG['active']
+            if active == "FALSE":
+                self.active = False
+            elif active == "TRUE":
+                self.active = True
+            else:
+                raise self.ArduinoException("Invalid Arduino Active Status")
 
             if not self.active:
                 raise self.ArduinoException("Arduino Inactive")
 
-            self.board = Arduino(self.com_port)
+            self.board = Arduino(ARDUINO_CONFIG['com_port'])
 
             it = util.Iterator(self.board)
             it.start()
 
-            self.water_level_pin = self.board.get_pin(self.water_level_pin_config)
-            self.pump_pin= self.board.get_pin(self.pump_pin_config)
+            self.water_level_pin = self.board.get_pin(ARDUINO_CONFIG['water_level_pin'])
+            self.pump_pin= self.board.get_pin(ARDUINO_CONFIG['pump_pin'])
 
             self.active = True
             print("Connected successfully!")
@@ -192,30 +200,12 @@ class MyArduino(Arduino):
             print("Connection unsuccessful. Quitting...")
             quit()
 
-    def config(self):
-        with open(CONFIG_FILE_PATH, 'r') as file:
-            config = json.load(file)
-
-            active = config['active']
-            if active == "FALSE":
-                self.active = False
-            elif active == "TRUE":
-                self.active = True
-            else:
-                raise self.ArduinoException("Invalid Arduino Active Status")
-
-            self.com_port = config['com_port']
-            self.pump_strength = config['pump_strength']
-
-            self.pump_pin_config = config['pump_pin']
-            self.water_level_pin_config = config['water_level_pin']
-            
-
     def analog_write(pin, val):
         pin.write(val)
 
     def analog_read(self, pin):
-        return pin.read()
+        val = pin.read()
+        return val
 
     def digital_write(self, pin, val):
         pin.write(val)
