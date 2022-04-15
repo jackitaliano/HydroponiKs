@@ -1,25 +1,22 @@
 import os
 import copy
-from pyfirmata import Arduino, util
 from Interfaces.Model_Interface import Model
+from arduino import Arduino
 import json_methods
 
 DEV_CONFIG_FILE_PATH = os.path.join('config', 'dev-config.json')
-ARDUINO_CONFIG_FILE_PATH = os.path.join('config', 'arduino-config.json')
-
 DEV_CONFIG = json_methods.load_json(DEV_CONFIG_FILE_PATH)
-ARDUINO_CONFIG = json_methods.load_json(ARDUINO_CONFIG_FILE_PATH)
 
 EDUCATION_FILE_PATH = os.path.join(DEV_CONFIG['data_folder'], DEV_CONFIG['education_file'])
 PLANTS_FILE_PATH = os.path.join(DEV_CONFIG['data_folder'], DEV_CONFIG['plants_file'])
-STATE_FILE_PATH = os.path.join(DEV_CONFIG['data_folder'], DEV_CONFIG['state_file'])
+STATE_FILE_PATH = os.path.join(DEV_CONFIG['data_folder'], DEV_CONFIG['save_file'])
 
 class Model(Model):
     plants : dict
     education_modules : dict
 
     def __init__(self) -> None:
-        self.arduino = MyArduino()
+        self.arduino = Arduino()
 
         self.arduino_active = self.arduino.active
         
@@ -61,7 +58,7 @@ class Model(Model):
     def set_pump_status(self, status):
         if not self.arduino_active: return
 
-        self.arduino.digital_write(self.arduino.pump_pin, status)
+        self.arduino.write_to_pin(self.arduino.pump_pin, status)
 
     def get_time(self):
         return self.time
@@ -128,7 +125,7 @@ class Model(Model):
             self.water_level = "NOT CONNECTED"
             return
 
-        level = self.arduino.analog_read(self.arduino.water_level_pin)
+        level = self.arduino.read_from_pin(self.arduino.water_level_pin)
 
         if level == None or level < 0.1: self.water_level = "Low"
         if level >= 0.1 and level < .23: self.water_level = "Medium"
@@ -162,53 +159,3 @@ class Model(Model):
         }
         
         json_methods.dump_json(state, STATE_FILE_PATH, pretty=True)
-
-class MyArduino(Arduino):
-    def __init__(self):
-        #try connecting to serial monitor
-        try:
-
-            active = ARDUINO_CONFIG['active']
-            if active == "FALSE":
-                self.active = False
-            elif active == "TRUE":
-                self.active = True
-            else:
-                raise self.ArduinoException("Invalid Arduino Active Status")
-
-            if not self.active:
-                raise self.ArduinoException("Arduino Inactive")
-
-            self.board = Arduino(ARDUINO_CONFIG['com_port'])
-
-            it = util.Iterator(self.board)
-            it.start()
-
-            self.water_level_pin = self.board.get_pin(ARDUINO_CONFIG['water_level_pin'])
-            self.pump_pin= self.board.get_pin(ARDUINO_CONFIG['pump_pin'])
-
-            self.active = True
-            print("Connected successfully!")
-
-        except self.ArduinoException as error:
-            print(f"Connecting unsuccesful: {error}")
-            print("Proceeding without connection...")
-            self.active = False
-
-        except Exception as error:
-            print(f"Error: {error}")
-            print("Connection unsuccessful. Quitting...")
-            quit()
-
-    def analog_write(pin, val):
-        pin.write(val)
-
-    def analog_read(self, pin):
-        val = pin.read()
-        return val
-
-    def digital_write(self, pin, val):
-        pin.write(val)
-
-    class ArduinoException(Exception):
-        pass

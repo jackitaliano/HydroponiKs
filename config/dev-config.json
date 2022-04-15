@@ -8,5 +8,5 @@
 
     "education_file": "education.json",
     "plants_file": "plants.json",
-    "state_file": "save_state.json"
+    "save_file": "save_state.json"
 }
