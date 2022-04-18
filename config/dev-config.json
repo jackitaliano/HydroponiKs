@@ -1,7 +1,15 @@
 {
+    "window_title": "HydroponiKs",
+    "window_default_scale": 0.625,
+    "window_min_scale": 0.625,
+    "window_max_scale": 1,
+    "resizable_x": false,
+    "resizable_y": false,
+
     "update_time_ms": 2000,
+    
     "time_scale" : "minute",
-    "time_offset": 10,
+    "time_offset": 0,
 
     "data_folder": "data",
     "assets_folder": "assets",

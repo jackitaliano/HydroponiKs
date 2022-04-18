@@ -161,3 +161,4 @@ class Controller(Controller):
     def exit(self):
         self.model.dump_save_state()
         self.process_turn_off_pump_event()
+        print("Exiting...")

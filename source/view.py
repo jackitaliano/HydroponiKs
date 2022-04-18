@@ -459,29 +459,41 @@ class EducationFrame(Frame):
             canvas.create_window((0, 0), window=scrollable_frame, anchor="nw")
             canvas.configure(yscrollcommand=scrollbar.set)
 
-            # New frame with image and text for each module
+            # New frame with image, title, and text for each module
             for i, module in enumerate(master.modules):
+                module_name = module
+
                 # Get module data (text and image)
                 module = master.modules[module]
 
                 # Create new frame
-                frame = Frame(scrollable_frame, i, 0)
+                module_frame = Frame(scrollable_frame, i, 0)
+                text_frame = Frame(scrollable_frame, i, 1)
 
                 # Get text and image from module
                 text = module["text"]
                 img_file = module["img_file"]
 
                 # Create new image and label
-                img = frame.create_img(row = 0, col=0, width=150, height=100, img_file=img_file)
-                text = frame.create_label(text=text, row=0, col=1) 
+                img = module_frame.create_img(row = 0, col=0, width=150, height=100, img_file=img_file)
+                title = text_frame.create_label(module_name, row=0, col=0)
+                text = text_frame.create_label(text=text, row=1, col=0) 
 
                 # Configure text wrap length
                 text.configure(wraplength=600)
 
-                # Configure frame grid layout
-                frame.grid_columnconfigure(0, weight='1')
-                frame.grid_columnconfigure(1, weight='2')
-                frame.grid_rowconfigure(0, weight='1')
+                # Configure text frame grid layout
+                text_frame.grid_rowconfigure(0, weight='1')
+                text_frame.grid_rowconfigure(1, weight='3')
+                text_frame.grid_columnconfigure(0, weight='1')
+
+                # Configure module frame grid layout
+                module_frame.grid_columnconfigure(0, weight='1')
+                module_frame.grid_columnconfigure(1, weight='2')
+                module_frame.grid_rowconfigure(0, weight='1')
+
+                # Configure padding between modules
+                module_frame.configure(pady='20')
 
                 # Configure each row grid layout
                 scrollable_frame.grid_rowconfigure(i, weight='1')

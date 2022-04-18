@@ -14,18 +14,25 @@ class App(tk.Tk):
         screen_height = self.winfo_screenheight()
 
         # Define window dimensions
-        window_width = 5 * screen_width // 8
-        window_height = 5 * screen_height // 8
+        window_width = int(screen_width * DEV_CONFIG['window_default_scale'])
+        window_height = int(screen_height * DEV_CONFIG['window_default_scale'])
+
+        min_width = int(screen_width * DEV_CONFIG['window_min_scale'])
+        min_height = int(screen_height * DEV_CONFIG['window_min_scale'])
+
+        max_width = int(screen_width * DEV_CONFIG['window_max_scale'])
+        max_height = int(screen_height * DEV_CONFIG['window_max_scale'])
 
         # Find the center point
         center_x = int(screen_width/2 - window_width / 2)
         center_y = int(screen_height/2 - window_height / 2)
 
         # Configure window
-        self.title("HydroponiKs")
+        self.title(DEV_CONFIG['window_title'])
         self.geometry(f'{window_width}x{window_height}+{center_x}+{center_y}')
-        self.resizable(True, True)
-        self.minsize(5 * screen_width // 8, 5 * screen_height // 8)
+        self.resizable(DEV_CONFIG['resizable_x'], DEV_CONFIG['resizable_y'])
+        self.minsize(min_width, min_height)
+        self.maxsize(max_width, max_height)
 
         # Configure window grid
         self.grid_rowconfigure(0, weight='1')
@@ -47,6 +54,9 @@ class App(tk.Tk):
 
         self.mainloop()
 
+    def exit(self):
+        self.controller.exit()
+        
     def update_controller_time_for_schedule(self):
         self.controller.handle_time()
 
@@ -57,4 +67,4 @@ if __name__ == '__main__':
     app = App()
 
     # Register model exit to exit
-    atexit.register(app.controller.exit)
+    atexit.register(app.exit)

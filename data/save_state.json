@@ -1,46 +1,24 @@
 {
-    "type": "cucumber",
+    "type": "default",
     "water_level": "NOT CONNECTED",
     "schedule": {
         "Sun": [
-            20,
-            21,
-            10,
-            17
+            12
         ],
         "Mon": [
-            20,
-            21,
-            10
+            14
         ],
         "Tue": [
-            20,
-            21,
-            3,
-            15
+            12
         ],
-        "Wed": [
-            20,
-            21,
-            10
-        ],
+        "Wed": [],
         "Thu": [
-            20,
-            21,
-            3,
-            15
+            13
         ],
         "Fri": [
-            20,
-            21,
-            10
+            12
         ],
-        "Sat": [
-            20,
-            21,
-            10,
-            17
-        ]
+        "Sat": []
     },
     "custom_schedules": {
         "pepper": {
