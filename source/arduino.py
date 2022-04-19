@@ -5,7 +5,7 @@ from pyfirmata import Arduino, util
 ARDUINO_CONFIG_FILE_PATH = os.path.join('config', 'arduino-config.json')
 ARDUINO_CONFIG = json_methods.load_json(ARDUINO_CONFIG_FILE_PATH)
 
-class Arduino(Arduino):
+class CustomArduino(Arduino):
     def __init__(self):
         #try connecting to serial monitor
         try:
@@ -42,7 +42,7 @@ class Arduino(Arduino):
             print("Connection unsuccessful. Quitting...")
             quit()
 
-    def write_to_pin(pin, val):
+    def write_to_pin(self, pin, val):
         pin.write(val)
 
     def read_from_pin(self, pin):

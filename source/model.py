@@ -1,7 +1,7 @@
 import os
 import copy
 from Interfaces.Model_Interface import Model
-from arduino import Arduino
+from arduino import CustomArduino as Arduino
 from config import DEV_CONFIG
 import json_methods
 
