@@ -48,6 +48,13 @@ class Controller(Controller):
         weekday, time = self.model.get_time()
         schedule = self.model.get_schedule()
 
+        water_level = self.model.get_water_level()
+        pump_active = self.model.get_pump_active_status()
+
+        if pump_active and water_level == 'Low':
+            print("Error: Water level low, turning off pump")
+            self.process_turn_off_pump_event(manual=True)
+
         if time in schedule[weekday]:
             self.process_turn_on_pump_event()
         elif time not in schedule[weekday]:
@@ -135,6 +142,7 @@ class Controller(Controller):
 
         if self.model.get_water_level() == "Low":
             print("Error: Water level low, cannot turn on pump")
+            self.process_turn_off_pump_event()
             return
 
         # Set pump strength to PUMP_STRENGTH
