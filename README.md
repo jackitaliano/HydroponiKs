@@ -3,6 +3,8 @@ __Goal:__ <br/>
 
 OSU Engineering 1182 Design Project to produce a prototype for a project after doing market research, determining user needs, and evaluating how our idea meets those requirements. <br/>
 
+<br />
+
 __Awards:__ <br />
 
 Chosen to represent our class at the OSU design showcase. We will present our project to judges and clubs for prizes and the opportunity for funding to continue our project.
