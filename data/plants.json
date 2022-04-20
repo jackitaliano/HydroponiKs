@@ -1,7 +1,7 @@
 {
     "tomato": {
         "description": "tomato description placeholder",
-        "water": "tomato water placeholder",
+        "water": "Tomatoes require consistent water levels. Too much water or too little will greatly impact the yield. We recommend watering once or twice daily.",
         "nutrients": "tomato nutrients placeholder",
         "img_file": "tomato.jpg",
         "default_schedule": {

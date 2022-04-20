@@ -1,8 +1,13 @@
-import tkinter as tk
+# Interfaces and config
 from view import View
 from model import Model
 from controller import Controller
-from config import DEV_CONFIG
+from Methods.config import DEV_CONFIG
+
+# Tkinter
+import tkinter as tk
+
+# On exit command
 import atexit
 
 class App(tk.Tk):
@@ -56,7 +61,7 @@ class App(tk.Tk):
 
     def exit(self):
         self.controller.exit()
-        
+
     def update_controller_time_for_schedule(self):
         self.controller.handle_time()
 

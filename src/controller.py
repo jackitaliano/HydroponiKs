@@ -1,6 +1,10 @@
+# Interface and config
 from Interfaces.Controller_Interface import Controller
+from Methods.config import DEV_CONFIG
+
+# Used for checking time against schedule
 from datetime import datetime
-from config import DEV_CONFIG
+
 class Controller(Controller):
     def __init__(self, model, view) -> None:
         self.model = model

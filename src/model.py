@@ -1,9 +1,12 @@
+# Interface and config
+from Interfaces.Model_Interface import Model
+from Methods.arduino import CustomArduino as Arduino
+from Methods.config import DEV_CONFIG
+
+# Helpers
+import Methods.json_methods as json_methods
 import os
 import copy
-from Interfaces.Model_Interface import Model
-from arduino import CustomArduino as Arduino
-from config import DEV_CONFIG
-import json_methods
 
 EDUCATION_FILE_PATH = os.path.join(DEV_CONFIG['data_folder'], DEV_CONFIG['education_file'])
 PLANTS_FILE_PATH = os.path.join(DEV_CONFIG['data_folder'], DEV_CONFIG['plants_file'])

@@ -9,7 +9,7 @@
     "update_time_ms": 2000,
     
     "time_scale" : "minute",
-    "time_offset": 0,
+    "time_offset": 30,
 
     "data_folder": "data",
     "assets_folder": "assets",

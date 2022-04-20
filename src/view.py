@@ -1,11 +1,14 @@
+# Interface and Config
+from Interfaces.View_Interface import View
+from Interfaces.Sub_Interfaces import Frame, Event
+from Methods.config import DEV_CONFIG
+
+# Tkinter
 import os
 from PIL import ImageTk, Image
 import tkinter as tk
 from tkinter import StringVar, ttk
-from Interfaces.View_Interface import View
-from Interfaces.Sub_Interfaces import Frame, Event
-from config import DEV_CONFIG
-import json_methods 
+
 class Frame(Frame):
     def __init__(self, master, row, col, border=False):
         super().__init__(master)

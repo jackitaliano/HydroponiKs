@@ -21,7 +21,7 @@ def load_json(file_path: str) -> dict:
 
 def dump_json(data: dict, file_path: str, pretty=False) -> None:
 
-    indent = 0
+    indent = 0 
     if pretty: indent = 4
 
     try: 

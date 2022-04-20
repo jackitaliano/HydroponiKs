@@ -1,5 +1,5 @@
 import os
-import json_methods
+import Methods.json_methods as json_methods
 from pyfirmata import Arduino, util
 
 ARDUINO_CONFIG_FILE_PATH = os.path.join('config', 'arduino-config.json')
