@@ -62,6 +62,9 @@ __Overview:__ <br/>
  </ol>
  
  __Screenshots:__ <br/>
- <img width="1012" alt="Screen Shot 2022-04-15 at 10 40 21 AM" src="https://user-images.githubusercontent.com/93797825/163584307-f2a9b6de-596f-47b6-97a6-de3d35848bb4.png">
-Other pages information in text WIP
+ 
+<img width="1012" alt="schedule_img" src="https://user-images.githubusercontent.com/93797825/164543920-d3c7174d-5e55-4e72-8fb3-967aa71e5b4e.png"> 
+ 
+<img width="1012" alt="selection_img" src="https://user-images.githubusercontent.com/93797825/164543736-dbf8141a-62ea-4bf5-817e-3437abc73246.png">
 
+<img width="1012" alt="education_img" src="https://user-images.githubusercontent.com/93797825/164543744-cc15d842-cffb-4443-add7-071271d0439a.png">
