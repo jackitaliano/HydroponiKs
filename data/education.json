@@ -10,5 +10,9 @@
     "Your_Impact": {
         "text":"You can fix any problem that is affecting you or your community! There are many online resources to help you and there are more educational opportunities to come from this project. Get started with something simple that you want to make better in your house, or even just make a fun game. ",
         "img_file":"Your_Impact.jpg"
+    },
+    "Coding": {
+        "text": "You can get involved in coding now! There are many free online resources to make an app just like this one, or even something simplere just for fun! Anything you can think of on your phone, computer, gaming console, or any other electronic device was coded by someone just like you.",
+        "img_file": "coding.jpg"
     }
 }

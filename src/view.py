@@ -407,15 +407,25 @@ class PlantInfoFrame(Frame):
             # Define master for access to data and action
             self.master = master
 
-            # Text labels
-            self.plant_description = self.create_label(text="plant description", row=0, col=0)
-            self.plant_water = self.create_label(text="plant water", row=1, col=0)
-            self.plant_nutrients = self.create_label(text="plant nutrients", row=2, col=0)   
+            # Plant description
+            self.description_frame = Frame(self, row=0, col=0)
+            self.plant_description_title = self.description_frame.create_label(text="Description", row=0, col=0)
+            self.plant_description = self.description_frame.create_label(text="plant description", row=1, col=0)
+
+            # Plant water
+            self.water_frame = Frame(self, row=1, col=0)
+            self.plant_water_title = self.water_frame.create_label(text="Water Needed", row=0, col=0)
+            self.plant_water = self.water_frame.create_label(text="plant water", row=1, col=0)
+
+            # Plant nutrients
+            self.nutrients_frame = Frame(self, row=2, col=0)
+            self.plant_nutrients_title = self.nutrients_frame.create_label(text="Nutrients Needed", row=0, col=0)
+            self.plant_nutrients = self.nutrients_frame.create_label(text="plant nutrients", row=1, col=0)
             
             # Configure text wrap length
-            self.plant_description.configure(wraplength=300)
-            self.plant_water.configure(wraplength=300)
-            self.plant_nutrients.configure(wraplength=300)
+            self.plant_description.configure(wraplength=400)
+            self.plant_water.configure(wraplength=400)
+            self.plant_nutrients.configure(wraplength=400)
 
             # Configure grid layout
             self.grid_rowconfigure(0, weight='1') # description

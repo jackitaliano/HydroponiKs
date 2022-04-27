@@ -1,8 +1,8 @@
 {
     "tomato": {
-        "description": "tomato description placeholder",
+        "description": "The tomato is the edible berry of the plant Solanum lycopersicum, commonly known as the tomato plant. The species originated in western South America and Central America",
         "water": "Tomatoes require consistent water levels. Too much water or too little will greatly impact the yield. We recommend watering once or twice daily.",
-        "nutrients": "tomato nutrients placeholder",
+        "nutrients": "Tomatoes need nitrogen, phosphorus, potassium, potash, calcium, and magnesium, along with other trace minerals",
         "img_file": "tomato.jpg",
         "default_schedule": {
             "Sun": [20,21],
