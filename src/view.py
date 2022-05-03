@@ -186,11 +186,12 @@ class View(View):
         self.control_tab.water_level_frame.water_label.config(text=f"Water level: {water_level}")
 
         # Destroy current schedule
-        for child in self.control_tab.schedule_frame.winfo_children():
-            child.destroy()
+        # for child in self.control_tab.schedule_frame.winfo_children():
+        #     child.destroy()
 
         # Create new schedule
-        self.control_tab.schedule_frame = self.control_tab.ScheduleFrame(master=self.control_tab, row=1, col=0)
+        self.control_tab.update()
+        # self.control_tab.schedule_frame = self.control_tab.ScheduleFrame(master=self.control_tab, row=1, col=0)
 
     def update_plant_info(self, type, description, water, nutrients, img_file):
         # Set plant menu var for dropdown menu
@@ -244,6 +245,7 @@ class ControlFrame(Frame):
         self.grid_columnconfigure(0, weight=1)
         self.grid(row= 0, column =0, sticky="nsew")
 
+
     def action_performed(self, e):
         # Events from control buttons
         if e.source() == 'Control':
@@ -264,6 +266,10 @@ class ControlFrame(Frame):
         elif e.source() == 'Schedule':
             self.root.controller.process_schedule_change_event(e.event())
 
+
+    def update(self):
+        self.schedule_frame.update()
+
     class WaterLevelFrame(Frame):
         def __init__(self, master, row=0, col=0, border=False):
             super().__init__(master, row=row, col=col, border=border)
@@ -274,6 +280,7 @@ class ControlFrame(Frame):
 
             self.grid_columnconfigure(0, weight='1')
             self.grid_rowconfigure(0, weight='1')
+
 
     class ScheduleFrame(Frame): 
         def __init__(self, master, row=0, col=0, border=False):
@@ -293,6 +300,12 @@ class ControlFrame(Frame):
             self.grid_rowconfigure(0, weight=1) #title
             self.grid_rowconfigure(1, weight=12) #table
             self.grid_columnconfigure(0, weight=1)
+
+
+        def update(self):
+            self.table = self.create_table_from_schedule(self.master.schedule, self.master.current_time)
+            self.schedule_frame = self.create_button_table(1,0,self.table)
+
 
         def create_table_from_schedule(self, schedule, current_time):
             table = [[0] * 25 for _ in range(7)]
